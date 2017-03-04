@@ -1,0 +1,35 @@
+#ifndef _PROTABLEGRAYMAP_H_
+#define _PROTABLEGRAYMAP_H_
+#include "stdio.h"
+
+#define Max_range 21
+#define Max_line 85
+typedef struct ProtableGreyMap{
+	
+	unsigned char Magic;//magic number identifies the type of file it is(PBM,PGM,and PPM)and its encoding(ASCII or binary)
+	int Max_value;
+	int X_axis;
+	int Y_axis;
+	unsigned char ASIIC_versions[16][8];//bitmap of Glyph
+ 	fpos_t pos;//frist data offset
+}ProtableGrayMap;
+
+//typedef struct ProtableGreyMap ProtableGreyMap;
+typedef  struct ProtableGreyMap * PGM;
+
+unsigned char PGMBuffer[Max_range*32][Max_line*16];//the buffer of the file.pgm
+
+
+void ProtableGrayMapASIIC_Init(PGM PGM_Map,int width,int high,unsigned char Glyph);
+int WritePGMHeader(FILE *stream,PGM PGM_Map);
+void WritePGMBufferInit(FILE* stream,PGM PGM_Map,int max_range,int max_line);
+void UpdataPGMBuffer(FILE* stream,PGM PGM_Map);
+void WritePGMData(PGM PGM_Map,int range,int line);
+
+
+
+#endif
+
+
+/**************************endfile************************/
+
